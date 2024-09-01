@@ -2,9 +2,14 @@ import React, { useState } from 'react'
 import Cart from '../../assets/icons/cart'
 import { useNavigate } from 'react-router-dom'
 import { login } from '../../services/login'
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../interface/stateApp/slices/userSlice';
 
 export default function Login() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    // Formulario de inicio de sesión
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [userName, setUserName] = useState('');
@@ -20,7 +25,7 @@ export default function Login() {
                 userName
             }
             login(data).then((result: any) => {
-                
+                dispatch(setUser(data));
                 navigate("home");
             }, error => {
                 console.log(error);
