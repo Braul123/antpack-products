@@ -24,7 +24,7 @@ export default function RouterApp() {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/home" element={<Home />} />
-      <Route path="/product" element={<CustomProduct />} />
+      <Route path="/product/:id?" element={<CustomProduct />} />
     </Routes>
   )
 }

@@ -1,25 +1,47 @@
 
 
-import React, { useState } from 'react'
-import Cart from '../../assets/icons/cart';
+import React, { useEffect, useState } from 'react'
 import Header from '../../layouts/header/Header';
 import RowBack from '../../assets/icons/rowBack';
-import { useNavigate } from 'react-router-dom';
-import { fetchSaveNewProduct } from '../../services/products';
+import { useNavigate, useParams } from 'react-router-dom';
+import { fetchEditProduct, fetchGetProductById, fetchSaveNewProduct } from '../../services/products';
 import { useDispatch } from 'react-redux';
-import { saveNewProduct } from '../../interface/stateApp/slices/productsSlice';
+import { saveNewProduct, updateProductById } from '../../interface/stateApp/slices/productsSlice';
 
-export default function CustomProduct() {
+export default function CustomProduct(props: any) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { id } = useParams();
+
   // Estado para el formulario
   const [formData, setFormData] = useState({
     name: '',
     description: '',
     price: 0,
     category: '',
+    id: ''
   });
+  // Control de errores
   const [errors, setErrors] = useState<any>({});
+
+  useEffect(() => {
+    // Si hay un id, es porque se está editando un producto
+    if (id) {
+      console.log('Editando producto:', id);
+      getProductById();
+    }
+    console.log('Props:', props);
+  },[]);
+
+  // Obtiene el priducto por id
+  const getProductById = () => {
+    // Ejecuta la petición para obtener el producto por id
+    fetchGetProductById(id).then((result: any) => {
+      setFormData(result);
+    }, err => {
+      console.error(err);
+    })
+  }
 
   // Manejar cambios en el formulario
   const handleChange = (e: any) => {
@@ -63,8 +85,7 @@ export default function CustomProduct() {
 
     e.preventDefault();
     if (validate()) {
-      console.log('Formulario completo y válido:', formData);
-      createProduct();
+      if (!id) createProduct(); else editProduct();
       // Aquí puedes enviar los datos al backend o realizar otra acción
     } else {
       console.log('Hay errores en el formulario');
@@ -88,6 +109,17 @@ export default function CustomProduct() {
       })
   }
 
+  // Edita el producto
+  const editProduct = () => {
+    // Ejecuta la petición para creación de producto
+    fetchEditProduct(formData).then((result: any) => {
+      dispatch(updateProductById(result));
+      returnBack();
+    }, err => {
+      console.error(err);
+    })
+  }
+
   return (
     <>
       <Header />
@@ -102,7 +134,7 @@ export default function CustomProduct() {
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
 
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Crear producto
+            {!id ? "Crear producto" : "Editar producto"}
           </h2>
         </div>
 
@@ -138,6 +170,7 @@ export default function CustomProduct() {
                   name="description"
                   value={formData.description}
                   onChange={handleChange}
+                  rows={5}
                   autoComplete="text"
                   className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -190,8 +223,15 @@ export default function CustomProduct() {
             <div>
               <button
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                Guardar
+                {!id ? "Guardar": "Actualizar"}
               </button>
+              {
+                id && <button
+                  onClick={() => editProduct()}
+                  className="flex w-full mt-3 justify-center rounded-md bg-red-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                  Eliminar 
+                </button>
+              }
             </div>
           </form>
         </div>

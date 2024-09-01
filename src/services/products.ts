@@ -31,8 +31,8 @@ export function fetchSaveNewProduct(data: Product) {
     return new Promise(async (resolve) => {
         const uniqueid = JSON.stringify(Math.random()).slice(2, 6);
         const newProduct: Product = {
-            id: uniqueid,
-            ...data
+            ...data,
+            id: uniqueid
         }
         resolve(newProduct);
     })
@@ -56,8 +56,6 @@ export function fetchGetProducts(skip: number, limit: number, search: any) {
     return new Promise(async (resolve) => {
         const products: any[] = await getProductsStorage();
         let temporalData = products;
-        console.log('ESTOS SON LOS PRODUCTOS ENCONTREADOS', search, products);
-
         if (search) {
             const searchGet = products.filter(
                 (prod: any) =>
@@ -75,5 +73,16 @@ export function fetchGetProducts(skip: number, limit: number, search: any) {
             const filter = temporalData.slice(skip, toIndexFilter);
             resolve(filter);
         }
+    })
+}
+
+/**
+ * @description Obtiene un producto por su id
+ */
+export function fetchGetProductById(id: any) {
+    return new Promise(async (resolve) => {
+        const products: any[] = await getProductsStorage();
+        const product = products.find((prod: any) => prod.id === id);
+        resolve(product);
     })
 }
