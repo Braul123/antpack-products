@@ -16,8 +16,11 @@ export default function RouterApp() {
     if (!user) {
       // Si hay un usuario logueado, redirige a /home
       navigate('/');
+    } else {
+      // Si no hay un usuario logueado, redirige a /home
+      navigate('/home');
     }
-  }, [navigate]);
+  }, []);
 
   return (
     // Define las rutas, como ruta por defecto /home

@@ -6,12 +6,15 @@ import RowBack from '../../assets/icons/rowBack';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchEditProduct, fetchGetProductById, fetchSaveNewProduct } from '../../services/products';
 import { useDispatch } from 'react-redux';
-import { saveNewProduct, updateProductById } from '../../interface/stateApp/slices/productsSlice';
+import { deleteProduct, saveNewProduct, updateProductById } from '../../interface/stateApp/slices/productsSlice';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
 
 export default function CustomProduct(props: any) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
+  const MySwal = withReactContent(Swal); // Modal de confirmación
 
   // Estado para el formulario
   const [formData, setFormData] = useState({
@@ -67,7 +70,7 @@ export default function CustomProduct(props: any) {
     }
     // Validar precio
     if (!formData.price) {
-      formErrors.email = 'El precio es requerido';
+      formErrors.price = 'El precio es requerido';
     }
     // Validar categoría
     if (!formData.category) {
@@ -81,8 +84,6 @@ export default function CustomProduct(props: any) {
 
   // Enviar formulario
   const handleSubmit = (e: any) => {
-    console.log('Formulario enviado');
-
     e.preventDefault();
     if (validate()) {
       if (!id) createProduct(); else editProduct();
@@ -118,6 +119,32 @@ export default function CustomProduct(props: any) {
     }, err => {
       console.error(err);
     })
+  }
+
+    // Elimina el producto de la colección
+    const actionDeleteProduct = (e: any) => {
+      e.preventDefault();
+      // Muestra alerta para confirmar la eliminación
+      MySwal.fire({
+          title: '¿Eliminar el producto?',
+          text: "¡No podrás revertir los cambios!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#4f46e5',
+          cancelButtonColor: '#d33',
+          confirmButtonText: '¡Sí, bórralo!',
+          cancelButtonText: 'Cancelar'
+      }).then((result) => {
+          if (result.isConfirmed) {
+              Swal.fire(
+                  '¡Eliminado!',
+                  'El producto ha sido eliminado.',
+                  'success'
+              );
+              dispatch(deleteProduct(formData));
+              returnBack();
+          }
+      });
   }
 
   return (
@@ -227,7 +254,8 @@ export default function CustomProduct(props: any) {
               </button>
               {
                 id && <button
-                  onClick={() => editProduct()}
+                  type="button"
+                  onClick={(event: any) => actionDeleteProduct(event)}
                   className="flex w-full mt-3 justify-center rounded-md bg-red-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                   Eliminar 
                 </button>
