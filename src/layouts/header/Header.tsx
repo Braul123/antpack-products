@@ -4,6 +4,7 @@ import { useSelector, UseSelector } from 'react-redux';
 import { selectorUserState } from '../../interface/stateApp/selectors/selectorsAll';
 import ArrowBack from '../../assets/icons/arrowBack';
 import { useNavigate } from 'react-router-dom';
+import { log } from 'console';
 
 export default function Header() {
     const user = useSelector(selectorUserState);
@@ -12,6 +13,7 @@ export default function Header() {
 
     // Obtiene el usuario en el estado
     useEffect(() => {
+        console.log(user);
         if (user) {
             setUserName(user.userName);
         }
@@ -25,7 +27,7 @@ export default function Header() {
 
     return (
         <header className="bg-white text-black p-4 flex justify-between items-center shadow-md">
-            <h1 className="text-lg font-bold">Bienvenido, {userName}</h1>
+            <h1 className="text-lg font-bold">Hola, {userName}</h1>
             <button
                 onClick={onLogout}
                 className="flex flex-row gap-x-1 items-center justify-center rounded-md bg-stone-950 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-stone-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
