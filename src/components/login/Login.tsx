@@ -54,7 +54,7 @@ export default function Login() {
             }
             // Validar correo
             if (!formData.email) {
-                formErrors.email = 'El correo electrónico es requerida';
+                formErrors.email = 'El correo electrónico es requerido';
             }
             // Validar contraseña
             if (!formData.password) {
