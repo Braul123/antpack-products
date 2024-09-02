@@ -57,8 +57,6 @@ export function fetchGetProducts(skip: number, limit: number, search: any) {
         const products: any[] = await getProductsStorage();
         let temporalData = products;
         if (search) {
-            console.log('BUSCANDO', search);
-            
             const searchGet = products.filter(
                 (prod: any) =>
                     prod.name.toLowerCase().includes(search.toLowerCase()) ||

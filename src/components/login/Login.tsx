@@ -28,10 +28,8 @@ export default function Login() {
                 dispatch(setUser(data));
                 navigate("home");
             }, error => {
-                console.log(error);
+                console.error(error);
             });
-        } else {
-            console.log('Formulario inválido');
         }
         event.preventDefault();
     }

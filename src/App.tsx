@@ -16,9 +16,6 @@ function App() {
     if (user) { 
       dispatch(setUser(JSON.parse(atob(user))));
     }
-    return () => {
-      console.log('User not found');
-    };
   }, []);
 
   useEffect(() => {

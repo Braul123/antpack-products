@@ -30,10 +30,8 @@ export default function CustomProduct(props: any) {
   useEffect(() => {
     // Si hay un id, es porque se está editando un producto
     if (id) {
-      console.log('Editando producto:', id);
       getProductById();
     }
-    console.log('Props:', props);
   },[]);
 
   // Obtiene el priducto por id
@@ -88,8 +86,6 @@ export default function CustomProduct(props: any) {
     if (validate()) {
       if (!id) createProduct(); else editProduct();
       // Aquí puedes enviar los datos al backend o realizar otra acción
-    } else {
-      console.log('Hay errores en el formulario');
     }
   };
 

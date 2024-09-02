@@ -13,7 +13,6 @@ export default function Header() {
 
     // Obtiene el usuario en el estado
     useEffect(() => {
-        console.log(user);
         if (user) {
             setUserName(user.userName);
         }
