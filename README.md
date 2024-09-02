@@ -29,7 +29,7 @@ You can access the live version of the application via the following link:
 
 The project structure is organized as follows:
 
-src
+- **src**
 ─ **__test__**: Unit test files
 ─ **assets**: Static resources like images and fonts
 ─ **components**: Reusable UI components
