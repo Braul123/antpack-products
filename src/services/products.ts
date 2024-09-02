@@ -2,6 +2,7 @@
 import { Product } from "../interface/models/interface";
 import { getProductsStorage } from "./utils";
 
+const API_URL: any = process.env.REACT_APP_API_URL;
 
 /**
  * @function fetchNewProductDefault
@@ -53,7 +54,7 @@ export function fetchEditProduct(data: Product) {
  * @description Obtiene los productos de acuerdo al paginador
  */
 export function fetchGetProducts(skip: number, limit: number, search: any) {
-    return new Promise(async (resolve) => {
+    return new Promise(async (resolve) => {        
         const products: any[] = await getProductsStorage();
         let temporalData = products;
         const _search = search ? search : '';

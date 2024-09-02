@@ -1,5 +1,7 @@
 import { LoginProps } from "../interface/models/interface";
 
+const API_URL: any = process.env.REACT_APP_API_URL;
+
 
 // Hace la peticion a inicio de sesión
 export function login(data: LoginProps) {
