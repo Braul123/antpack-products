@@ -9,6 +9,12 @@ This project is a web application developed with React, utilizing various techno
 
 This application is designed to manage products efficiently. It allows users to create, edit, and delete products, providing an intuitive interface for handling product information quickly and easily.
 
+## Access to the Application
+
+You can access the live version of the application via the following link:
+
+[Live Application](https://antpack-products-4r104kth3-braul123s-projects.vercel.app/)
+
 ## Technologies Used
 
 - **React**: The main library for building the user interface.

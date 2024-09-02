@@ -20,6 +20,7 @@ export default function Login() {
 
     // Manejar cambios en el formulario
     const handleChange = (e: any) => {
+        validateForm();
         const { name, value } = e.target;
         setFormData({
             ...formData,

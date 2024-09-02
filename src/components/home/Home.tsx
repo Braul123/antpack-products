@@ -119,24 +119,27 @@ export default function Home() {
                     <button
                         onClick={() => createProduct()}
                         className="flex flex-row gap-x-1 items-center justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:bg-indigo-600">
-                        Crea un producto
+                        Crear producto
                         <AddIcon />
                     </button>
                 </div>
 
                 {/* Input para buscar productos */}
-                <div className='mt-5'>
-                    <input
-                        className="p-2 w-full h-12 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        type="text"
-                        placeholder="Buscar producto"
-                        onChange={(event) => handleChange(event.target.value)}
-                        value={filter}
-                    />
-                </div>
+                {
+                    products.length > 0 && 
+                    <div className='mt-5'>
+                        <input
+                            className="p-2 w-full h-12 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            type="text"
+                            placeholder="Buscar producto"
+                            onChange={(event) => handleChange(event.target.value)}
+                            value={filter}
+                        />
+                    </div>
+                }
 
                 {
-                    products.length == 0 && <div className='mt-10'><NotFound /></div>
+                    products.length == 0 && <div className='mt-16'><NotFound /></div>
                 }
 
                 <div className='grid grid-cols-1 gap-5 mt-5'>
