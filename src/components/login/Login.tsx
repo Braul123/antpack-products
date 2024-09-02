@@ -17,6 +17,7 @@ export default function Login() {
     });
     // Control de errores
     const [errors, setErrors] = useState<any>({});
+    const [statusSend, setStatusSend] = useState<any>(false);
 
     // Manejar cambios en el formulario
     const handleChange = (e: any) => {
@@ -31,6 +32,7 @@ export default function Login() {
 
     // Inicia sesión
     const onLogin = (event: any) => {
+        setStatusSend(true);
         if (validateForm()) {
             login(formData).then((result: any) => {
                 dispatch(setUser(result));
@@ -44,22 +46,26 @@ export default function Login() {
 
     // Validar formulario
     const validateForm = () => {
-        let formErrors: any = {};
-        // Validar nombre
-        if (!formData.userName) {
-            formErrors.userName = 'El nombre de usuario es requerido';
+        if (statusSend) {
+            let formErrors: any = {};
+            // Validar nombre
+            if (!formData.userName) {
+                formErrors.userName = 'El nombre de usuario es requerido';
+            }
+            // Validar correo
+            if (!formData.email) {
+                formErrors.email = 'El correo electrónico es requerida';
+            }
+            // Validar contraseña
+            if (!formData.password) {
+                formErrors.password = 'La contraseña es requerida';
+            }
+    
+            setErrors(formErrors);
+            return Object.keys(formErrors).length === 0;
+        } else {
+            return false;
         }
-        // Validar correo
-        if (!formData.email) {
-            formErrors.email = 'El correo electrónico es requerida';
-        }
-        // Validar contraseña
-        if (!formData.password) {
-            formErrors.password = 'La contraseña es requerida';
-        }
-
-        setErrors(formErrors);
-        return Object.keys(formErrors).length === 0;
     };
 
     return (
