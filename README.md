@@ -30,13 +30,13 @@ You can access the live version of the application via the following link:
 The project structure is organized as follows:
 
 - **src**
-─ **test**: Unit test files
-─ **assets**: Static resources like images and fonts
-─ **components**: Reusable UI components
-─ **interface**: TypeScript interfaces
-─ **layouts**: Page layouts and templates
-─ **routes**: Routing configuration
-─ **services**: Services and utility functions
+- **test**: Unit test files
+- **assets**: Static resources like images and fonts
+- **components**: Reusable UI components
+- **interface**: TypeScript interfaces
+- **layouts**: Page layouts and templates
+- **routes**: Routing configuration
+- **services**: Services and utility functions
 
 ## Installation
 
