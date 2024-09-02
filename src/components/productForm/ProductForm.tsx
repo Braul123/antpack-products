@@ -10,7 +10,7 @@ import { deleteProduct, saveNewProduct, updateProductById } from '../../interfac
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
 
-export default function CustomProduct(props: any) {
+export default function ProductForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -135,10 +135,16 @@ export default function CustomProduct(props: any) {
                   'El producto ha sido eliminado.',
                   'success'
               );
-              dispatch(deleteProduct(formData));
-              returnBack();
+              deleteProductById();
           }
       });
+  }
+
+  // Elimina el producto
+  const deleteProductById = () => {
+    // Ejecuta la petición para eliminar el producto
+    dispatch(deleteProduct(formData));
+    returnBack();
   }
 
   return (
@@ -162,7 +168,7 @@ export default function CustomProduct(props: any) {
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="productName" className="block text-sm font-medium leading-6 text-gray-900">
                 Nombre del producto
               </label>
               <div className="mt-2">
@@ -243,8 +249,9 @@ export default function CustomProduct(props: any) {
 
             <div>
               <button
+                name='save'
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                {!id ? "Guardar": "Actualizar"}
+                  Guardar
               </button>
               {
                 id && <button

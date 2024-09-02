@@ -56,11 +56,12 @@ export function fetchGetProducts(skip: number, limit: number, search: any) {
     return new Promise(async (resolve) => {
         const products: any[] = await getProductsStorage();
         let temporalData = products;
-        if (search) {
+        const _search = search ? search : '';
+        if (_search) {
             const searchGet = products.filter(
                 (prod: any) =>
-                    prod.name.toLowerCase().includes(search.toLowerCase()) ||
-                    prod.category.toLowerCase().includes(search.toLowerCase()));
+                    prod.name.toLowerCase().includes(_search.toLowerCase()) ||
+                    prod.category.toLowerCase().includes(_search.toLowerCase()));
             resolve(searchGet);
         } else {
             // identifica hasta que indice debe ir el paginador

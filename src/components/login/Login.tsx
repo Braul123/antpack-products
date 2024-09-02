@@ -9,7 +9,6 @@ export default function Login() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-
     // Estado para el formulario
     const [formData, setFormData] = useState({
         userName: '',
@@ -131,7 +130,7 @@ export default function Login() {
                                     id="password"
                                     name="password"
                                     type="password"
-                                    placeholder='********'
+                                    placeholder='Contraseña'
                                     onChange={handleChange}
                                     required
                                     autoComplete="current-password"

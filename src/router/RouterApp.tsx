@@ -4,7 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import Login from '../components/login/Login';
 import Home from '../components/home/Home';
 import { useNavigate } from 'react-router-dom'
-import CustomProduct from '../components/customProducts/customProduct';
+import ProductForm from '../components/productForm/ProductForm';
 
 export default function RouterApp() {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ export default function RouterApp() {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/home" element={<Home />} />
-      <Route path="/product/:id?" element={<CustomProduct />} />
+      <Route path="/product/:id?" element={<ProductForm />} />
     </Routes>
   )
 }
