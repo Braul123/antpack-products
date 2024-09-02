@@ -7,12 +7,17 @@ export function login(data: LoginProps) {
         const { email, password } = data;
         // fetch ...
         if (email && password) {
-            resolve({
-                email,
-                password
-            });
+            resolve(data);
         } else {
             reject('Error');
         }
     });
 };
+
+export function fetchLogout() {
+    return new Promise((resolve) => {
+        localStorage.removeItem('user');
+        localStorage.removeItem('products');
+        resolve('Logout');
+    });
+}

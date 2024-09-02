@@ -54,7 +54,7 @@ export default function CustomProduct(props: any) {
   };
 
   // Validar formulario
-  const validate = () => {
+  const validateForm = () => {
     let formErrors: any = {};
 
     // Validar nombre
@@ -75,7 +75,6 @@ export default function CustomProduct(props: any) {
       formErrors.category = 'La categoría es requerida';
     }
 
-
     setErrors(formErrors);
     return Object.keys(formErrors).length === 0;
   };
@@ -83,9 +82,8 @@ export default function CustomProduct(props: any) {
   // Enviar formulario
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    if (validate()) {
+    if (validateForm()) {
       if (!id) createProduct(); else editProduct();
-      // Aquí puedes enviar los datos al backend o realizar otra acción
     }
   };
 

@@ -1,12 +1,14 @@
 
 import React, { useEffect, useState } from 'react'
-import { useSelector, UseSelector } from 'react-redux';
+import { useDispatch, useSelector, UseSelector } from 'react-redux';
 import { selectorUserState } from '../../interface/stateApp/selectors/selectorsAll';
 import ArrowBack from '../../assets/icons/arrowBack';
 import { useNavigate } from 'react-router-dom';
-import { log } from 'console';
+import { fetchLogout } from '../../services/login';
+import { setAllProducts } from '../../interface/stateApp/slices/productsSlice';
 
 export default function Header() {
+    const dispatch = useDispatch();
     const user = useSelector(selectorUserState);
     const [userName, setUserName] = useState<string>('');
     const navigate = useNavigate();
@@ -19,9 +21,10 @@ export default function Header() {
     }, [user]);
 
     // Cierra sesión
-    const onLogout = () => {
-        localStorage.removeItem('user');
-        navigate("home");
+    const onLogout = async () => {
+        await fetchLogout();
+        dispatch(setAllProducts([]));
+        navigate("/");
     }
 
     return (

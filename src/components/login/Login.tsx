@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import Cart from '../../assets/icons/cart'
-import { useNavigate } from 'react-router-dom'
-import { login } from '../../services/login'
+import React, { useState } from 'react';
+import Cart from '../../assets/icons/cart';
+import { useNavigate } from 'react-router-dom';
+import { login } from '../../services/login';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../interface/stateApp/slices/userSlice';
 
@@ -9,23 +9,31 @@ export default function Login() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    // Formulario de inicio de sesión
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [userName, setUserName] = useState('');
+
+    // Estado para el formulario
+    const [formData, setFormData] = useState({
+        userName: '',
+        email: '',
+        password: ''
+    });
+    // Control de errores
+    const [errors, setErrors] = useState<any>({});
+
+    // Manejar cambios en el formulario
+    const handleChange = (e: any) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
+
 
     // Inicia sesión
     const onLogin = (event: any) => {
-        const validForm = isValidForm();
-        // Si el formulario es válido, inicia sesión
-        if (validForm) {
-            const data = {
-                email,
-                password,
-                userName
-            }
-            login(data).then((result: any) => {
-                dispatch(setUser(data));
+        if (validateForm()) {
+            login(formData).then((result: any) => {
+                dispatch(setUser(result));
                 navigate("home");
             }, error => {
                 console.error(error);
@@ -34,11 +42,26 @@ export default function Login() {
         event.preventDefault();
     }
 
-    // Valida si los campos del formulario son válidos
-    const isValidForm = () => {
-        return email && password && userName;
-    }
-    
+    // Validar formulario
+    const validateForm = () => {
+        let formErrors: any = {};
+        // Validar nombre
+        if (!formData.userName) {
+            formErrors.userName = 'El nombre de usuario es requerido';
+        }
+        // Validar correo
+        if (!formData.email) {
+            formErrors.email = 'El correo electrónico es requerida';
+        }
+        // Validar contraseña
+        if (!formData.password) {
+            formErrors.password = 'La contraseña es requerida';
+        }
+
+        setErrors(formErrors);
+        return Object.keys(formErrors).length === 0;
+    };
+
     return (
         <>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -65,15 +88,16 @@ export default function Login() {
                             </label>
                             <div className="mt-2">
                                 <input
-                                    placeholder='Hormiga 23'
+                                    placeholder='Antman 123'
                                     id="userName"
                                     name="userName"
                                     type="text"
-                                    onChange={(event) => setUserName(event.target.value)}
+                                    onChange={handleChange}
                                     required
                                     autoComplete="text"
                                     className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
+                                {errors.userName && <p className="text-red-500 text-xs italic">{errors.userName}</p>}
                             </div>
                         </div>
 
@@ -83,15 +107,16 @@ export default function Login() {
                             </label>
                             <div className="mt-2">
                                 <input
-                                    placeholder='antpack@gmail.com'
+                                    placeholder='antman123@gmail.com'
                                     id="email"
                                     name="email"
                                     type="email"
-                                    onChange={(event) => setEmail(event.target.value)}
+                                    onChange={handleChange}
                                     required
                                     autoComplete="email"
                                     className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
+                                {errors.email && <p className="text-red-500 text-xs italic">{errors.email}</p>}
                             </div>
                         </div>
 
@@ -107,11 +132,12 @@ export default function Login() {
                                     name="password"
                                     type="password"
                                     placeholder='********'
-                                    onChange={(event) => setPassword(event.target.value)}
+                                    onChange={handleChange}
                                     required
                                     autoComplete="current-password"
                                     className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
+                                {errors.password && <p className="text-red-500 text-xs italic">{errors.password}</p>}
                             </div>
                         </div>
 
